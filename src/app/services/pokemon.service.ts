@@ -14,4 +14,8 @@ export class PokemonService {
     return this.http.get<Array<any>>(this.pokemonUrl);
   }
 
+  getByUrl(url){
+    return this.http.get<Array<any>>(url);
+  }
+
 }
