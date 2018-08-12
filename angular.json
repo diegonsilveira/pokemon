@@ -25,7 +25,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["../pokemon/node_modules/jquery/dist/jquery.min.js",
+                        "../pokemon/node_modules/bootstrap/dist/js/bootstrap.js"   
+            ]
           },
           "configurations": {
             "production": {

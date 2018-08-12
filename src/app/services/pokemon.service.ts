@@ -1,21 +1,27 @@
+import { Observable } from 'rxjs/Rx';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Http } from '@angular/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
 
-  pokemonUrl = "https://pokeapi.co/api/v2/pokemon";
+  pokemonUrl = "https://pokeapi.co/api/v2/pokemon/";
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: Http) { }
 
-  getAll(){
-    return this.http.get<Array<any>>(this.pokemonUrl);
+  getAll(): Observable<any[]> {
+    return this.http.get(this.pokemonUrl).pipe(map(res => res.json()));
   }
 
-  getByUrl(url){
-    return this.http.get<Array<any>>(url);
+  getByUrl(url): Observable<any[]> {
+    return this.http.get(url).pipe(map(res => res.json()));
+  }
+
+  getByName(name): Observable<any[]>{
+    return this.http.get(this.pokemonUrl + name).pipe(map(res => res.json()));
   }
 
 }
