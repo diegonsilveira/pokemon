@@ -8,6 +8,7 @@ import { PokemonService } from '../services/pokemon.service';
 })
 export class PokemonListComponent implements OnInit {
 
+  //variaveis
   pokemons: Array<any>;
   pokemon: {};
   data: {};
@@ -26,7 +27,7 @@ export class PokemonListComponent implements OnInit {
 
   //retorna os primeiros pokemons
   getFirst(name){
-    if (name != ''){
+    if (name){
       this.getByName(name);
     }
     else {
