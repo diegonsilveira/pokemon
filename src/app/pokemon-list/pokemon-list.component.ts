@@ -15,7 +15,7 @@ export class PokemonListComponent implements OnInit {
   abilities = [];
   img: String;
   favorite: boolean;
-  
+
   constructor(private pokemonService: PokemonService) { }
 
   ngOnInit() {
@@ -62,10 +62,15 @@ export class PokemonListComponent implements OnInit {
   fav(name){
     if (localStorage.getItem('poke_' + name)) {
       localStorage.removeItem('poke_' + name);
-      this.favorite = false;
+      console.log('poke_' + name);
     } else {
       localStorage.setItem('poke_' + name, "TRUE");
-      this.favorite = true;
     };
   };
+
+  //verifica se o pokemon é favorito
+  isFav(name){
+    let poke = 'poke_' + name;
+    return localStorage.getItem(poke) ? true : false;
+  }
 }

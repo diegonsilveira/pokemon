@@ -25,8 +25,8 @@
               <tbody>
                 <tr *ngFor="let pokemon of pokemons">
                   <td class="text-center">
-                    <img (click)="fav(pokemon.name)" *ngIf="!favorite" src="/assets/img/baseline-favorite_border-24px.svg"/>
-                    <img (click)="fav(pokemon.name)" *ngIf="favorite" src="/assets/img/baseline-favorite-24px.svg"/>
+                    <img (click)="fav(pokemon.name)" *ngIf="!isFav(pokemon.name)" src="/assets/img/baseline-favorite_border-24px.svg"/>
+                    <img (click)="fav(pokemon.name)" *ngIf="isFav(pokemon.name)" src="/assets/img/baseline-favorite-24px.svg"/>
                   </td>
                   <td class="text-center">
                     {{pokemon.name}}
@@ -56,18 +56,18 @@
           <div *ngIf="pokemon" class="modal-body">
             <div class="row">
               <div class="col-3">
-                <img src="{{this.img}}" class="rounded float-left" alt="...">
+                <img src="{{this.img}}" class="rounded float-left">
               </div>
               <div class="col">
                   <label for="pokemon-name" class="col-form-label">Nome:</label>
-                  <input type="text" class="form-control" [(ngModel)]="pokemon && pokemon.name" id="pokemon-name" name="pokemon-name" disabled> 
+                  <input type="text" class="form-control" [(ngModel)]="pokemon && pokemon.name" id="pokemon-name" name="pokemon-name" disabled>
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label for="pokemon-weight" class="col-form-label">Peso:</label>
                 <input type="text" class="form-control" [(ngModel)]="pokemon && pokemon.weight" id="pokemon-weight" name="pokemon-weight" disabled>
-              </div>  
+              </div>
               <div class="col">
                 <label for="pokemon-height" class="col-form-label">Altura:</label>
                 <input type="text" class="form-control" [(ngModel)]="pokemon && pokemon.height" id="pokemon-height" name="pokemon-height" disabled>
@@ -94,7 +94,7 @@
                     </div>
                 </ul>
               </div>
-            </div>            
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
