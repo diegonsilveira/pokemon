@@ -1,9 +1,9 @@
 <form>
   <!-- Search -->
   <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand">Pokémon</a>
+      <a class="navbar-brand" (click)="getAll('')">Lista de Pokémons</a>
       <form class="form-inline" (ngSubmit)="getByName(input.value)">
-        <input #input class="form-control mr-sm-2" type="search" placeholder="Pesquisar" aria-label="Search">
+        <input #input class="form-control mr-sm-2" type="search" placeholder="Pesquisar por nome" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
       </form>
     </nav>
@@ -18,17 +18,20 @@
                 <tr>
                   <th>Favoritos</th>
                   <th>Pokémon</th>
-                  <th>URL</th>
+                  <th>Detalhes</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr *ngFor="let pokemon of pokemons">
                   <td class="text-center">
-                      *
+                    <img (click)="fav(pokemon.name)" *ngIf="!favorite" src="/assets/img/baseline-favorite_border-24px.svg"/>
+                    <img (click)="fav(pokemon.name)" *ngIf="favorite" src="/assets/img/baseline-favorite-24px.svg"/>
                   </td>
-                  <td class="text-center">{{pokemon.name}}</td>
-                  <td>
+                  <td class="text-center">
+                    {{pokemon.name}}
+                  </td>
+                  <td class="text-center">
                     <button id="modalButton" (click)="getByUrl(pokemon.url)" type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#modal">
                       Visualizar
                     </button>
@@ -45,7 +48,7 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="title">{{pokemon.name}}</h5>
+            <h5 class="modal-title" id="title"  style='text-transform:uppercase' >{{pokemon && pokemon.name}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -57,17 +60,17 @@
               </div>
               <div class="col">
                   <label for="pokemon-name" class="col-form-label">Nome:</label>
-                  <input type="text" class="form-control" [(ngModel)]="pokemon.name" id="pokemon-name" name="pokemon-name" disabled> 
+                  <input type="text" class="form-control" [(ngModel)]="pokemon && pokemon.name" id="pokemon-name" name="pokemon-name" disabled> 
               </div>
             </div>
             <div class="row">
               <div class="col">
                 <label for="pokemon-weight" class="col-form-label">Peso:</label>
-                <input type="text" class="form-control" [(ngModel)]="pokemon.weight" id="pokemon-weight" name="pokemon-weight" disabled>
+                <input type="text" class="form-control" [(ngModel)]="pokemon && pokemon.weight" id="pokemon-weight" name="pokemon-weight" disabled>
               </div>  
               <div class="col">
                 <label for="pokemon-height" class="col-form-label">Altura:</label>
-                <input type="text" class="form-control" [(ngModel)]="pokemon.height" id="pokemon-height" name="pokemon-height" disabled>
+                <input type="text" class="form-control" [(ngModel)]="pokemon && pokemon.height" id="pokemon-height" name="pokemon-height" disabled>
               </div>
               <div class="col">
                   <label for="pokemon-xp" class="col-form-label">Experiência:</label>

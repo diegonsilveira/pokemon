@@ -14,6 +14,7 @@ export class PokemonListComponent implements OnInit {
   types = [];
   abilities = [];
   img: String;
+  favorite: boolean;
   
   constructor(private pokemonService: PokemonService) { }
 
@@ -21,6 +22,7 @@ export class PokemonListComponent implements OnInit {
     this.getAll("");
   }
 
+  //retorna todos os pokemons
   getAll(name){
     if (name != ""){
       this.getByName(name);
@@ -30,6 +32,7 @@ export class PokemonListComponent implements OnInit {
     }
   }
 
+  //busca pela URL, utilizado para a modal detail
   getByUrl(url){
     this.pokemonService.getByUrl(url).subscribe((data) => {
       this.pokemon = data;
@@ -45,10 +48,24 @@ export class PokemonListComponent implements OnInit {
     });
   }
 
+  //retorna somente o pokemon com o nome digitado na pesquisa
   getByName(name){
     this.pokemonService.getByName(name).subscribe((data) => {
-      this.pokemons = data["results"];
-      console.log(data);
+      let url = "https://pokeapi.co/api/v2/pokemon/";
+      data['url'] = url + data['id']
+      this.pokemons = [data];
+      console.log(this.pokemons);
     });
   }
+
+  //adiciona o pokemon na localStorage do browser
+  fav(name){
+    if (localStorage.getItem('poke_' + name)) {
+      localStorage.removeItem('poke_' + name);
+      this.favorite = false;
+    } else {
+      localStorage.setItem('poke_' + name, "TRUE");
+      this.favorite = true;
+    };
+  };
 }
