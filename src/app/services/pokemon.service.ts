@@ -12,13 +12,14 @@ export class PokemonService {
 
   constructor(private http: Http) { }
 
-  getAll(limit?:20, offset?:0): Observable<any[]> {
-    let params = {
-      limit: limit,
-      offset: offset
-    }
-    return this.http.get(this.pokemonUrl, {params: params}).pipe(map(res => res.json()));
+  getFirst(): Observable<any[]> {
+    return this.http.get(this.pokemonUrl).pipe(map(res => res.json()));
   }
+
+  getPage(url): Observable<any[]>{
+    return this.http.get(url).pipe(map(res => res.json()));
+  }
+
   getByUrl(url): Observable<any[]> {
     return this.http.get(url).pipe(map(res => res.json()));
   }

@@ -13,22 +13,28 @@ export class PokemonListComponent implements OnInit {
   data: {};
   types = [];
   abilities = [];
-  img: String;
+  img: string;
   favorite: boolean;
+  nextUrl: string;
+  previousUrl: string;
 
   constructor(private pokemonService: PokemonService) { }
 
   ngOnInit() {
-    this.getAll("");
+    this.getFirst('');
   }
 
-  //retorna todos os pokemons
-  getAll(name){
-    if (name != ""){
+  //retorna os primeiros pokemons
+  getFirst(name){
+    if (name != ''){
       this.getByName(name);
     }
     else {
-      this.pokemonService.getAll().subscribe(data => this.pokemons = data["results"]);
+      this.pokemonService.getFirst().subscribe(data => {
+        this.pokemons = data['results'];
+        this.nextUrl = data['next'];
+        this.previousUrl = data['previous'];
+      });
     }
   }
 
@@ -54,7 +60,6 @@ export class PokemonListComponent implements OnInit {
       let url = "https://pokeapi.co/api/v2/pokemon/";
       data['url'] = url + data['id']
       this.pokemons = [data];
-      console.log(this.pokemons);
     });
   }
 
@@ -72,5 +77,25 @@ export class PokemonListComponent implements OnInit {
   isFav(name){
     let poke = 'poke_' + name;
     return localStorage.getItem(poke) ? true : false;
+  }
+
+  //vai para a proxima pagina
+  nextPage(url){
+    this.pokemonService.getPage(url).subscribe((data) => {
+      this.pokemons = data['results'];
+      this.nextUrl = data['next'];
+      this.previousUrl = data['previous'];
+    });
+  }
+
+  //volta para a pagina anterior
+  previousPage(url){
+    if (url != null) {
+      this.pokemonService.getPage(url).subscribe((data) => {
+        this.pokemons = data['results'];
+        this.nextUrl = data['next'];
+        this.previousUrl = data['previous'];
+      });
+    }
   }
 }

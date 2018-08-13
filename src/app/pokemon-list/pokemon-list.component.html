@@ -1,7 +1,7 @@
 <form>
   <!-- Search -->
   <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" (click)="getAll('')">Lista de Pokémons</a>
+      <a class="navbar-brand" (click)="getFirst('')">Lista de Pokémons</a>
       <form class="form-inline" (ngSubmit)="getByName(input.value)">
         <input #input class="form-control mr-sm-2" type="search" placeholder="Pesquisar por nome" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
@@ -106,14 +106,11 @@
     <!-- Pagination -->
     <nav>
       <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-          <a class="page-link" href="#" tabindex="-1">Anterior</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
         <li class="page-item">
-          <a class="page-link" href="#">Próximo</a>
+          <a (click)="previousPage(previousUrl)" class="page-link">Anterior</a>
+        </li>
+        <li class="page-item">
+          <a (click)="nextPage(nextUrl)" class="page-link">Próximo</a>
         </li>
       </ul>
     </nav>
